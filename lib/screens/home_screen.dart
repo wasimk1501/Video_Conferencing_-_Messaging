@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:video_conferencing/screens/create_meeting.dart';
+import 'package:video_conferencing/screens/join_with_code.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -51,27 +52,34 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 25),
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.connect_without_contact, color: Colors.white),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "Join with the code",
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      ),
-                    ],
+              GestureDetector(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 25),
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(Icons.connect_without_contact,
+                            color: Colors.white),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "Join with the code",
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                      ],
+                    ),
                   ),
+                ),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const JoinWithCode()),
                 ),
               ),
               Stack(
