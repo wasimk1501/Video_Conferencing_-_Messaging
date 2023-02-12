@@ -17,7 +17,7 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
         body: Center(
             child: Text(
-      "Conferencing App",
+      "Video Conferencing App",
       style: TextStyle(fontSize: 25.0),
     )));
   }
