@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:video_conferencing/screens/home_screen.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -8,17 +9,33 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(
-        const Duration(
-          seconds: 2,
-        ),
-        () => Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const HomeScreen())));
+    // Timer(
+    //     const Duration(
+    //       seconds: 2,
+    //     ),
+    //     () => Navigator.pushReplacement(context,
+    //         MaterialPageRoute(builder: (context) => const HomeScreen())));
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.pushReplacementNamed(context, '/home');
+    });
     return Scaffold(
         body: Center(
-            child: Text(
-      "Video Conferencing App",
-      style: TextStyle(fontSize: 25.0),
+            child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Hero(
+          tag: "LottieAnimation",
+          child: Lottie.asset("assets/lottie/meeting.json", width: 150),
+        ),
+        const Hero(
+          tag: "TitleAnimation",
+          child: Text(
+            "MeetingMinds",
+            style: TextStyle(fontSize: 25.0),
+          ),
+        ),
+      ],
     )));
   }
 }

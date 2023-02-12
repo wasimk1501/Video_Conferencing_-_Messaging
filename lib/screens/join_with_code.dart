@@ -132,7 +132,7 @@ class _JoinWithCodeState extends State<JoinWithCode> {
                         width: 80.0,
                         height: 80.0,
                         decoration: BoxDecoration(
-                            color: Color(0xff1590D4),
+                            color: const Color(0xff1590D4),
                             borderRadius: BorderRadius.circular(20)),
                         child: const Icon(
                           Icons.present_to_all,

@@ -4,7 +4,9 @@ import 'package:video_conferencing/screens/create_meeting.dart';
 import 'package:video_conferencing/screens/join_with_code.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({
+    super.key,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -15,7 +17,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: const Text("MeetingMinds")),
+        title: const Center(
+            child: Hero(tag: "TitleAnimation", child: Text("MeetingMinds"))),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -87,13 +90,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 300.0),
                     child: Center(
-                        child: Lottie.asset("assets/lottie/meeting.json",
-                            width: 150)),
+                      //   child: Hero(
+                      // tag: "LottieAnimation",
+                      child: Lottie.asset("assets/lottie/meeting.json",
+                          width: 150),
+                      // ),
+                    ),
                   ),
                   Lottie.asset("assets/lottie/connection.json"),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               )
             ],
@@ -105,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 25),
         decoration: BoxDecoration(
-            color: Color.fromARGB(255, 247, 247, 247),
+            color: const Color.fromARGB(255, 247, 247, 247),
             borderRadius: BorderRadius.circular(20)),
         child: const Center(
           child: Text(
