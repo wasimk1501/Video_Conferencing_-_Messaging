@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Container(child: Text("Create a new meeting.")),
+          Container(child: const Text("Create a new meeting.")),
           Container(child: Text("Enter the code")),
         ],
       ),
