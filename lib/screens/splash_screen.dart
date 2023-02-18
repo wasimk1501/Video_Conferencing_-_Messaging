@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:video_conferencing/screens/home_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -15,27 +14,29 @@ class SplashScreen extends StatelessWidget {
     //     ),
     //     () => Navigator.pushReplacement(context,
     //         MaterialPageRoute(builder: (context) => const HomeScreen())));
-    Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, '/home');
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.pushReplacementNamed(context, '/login');
     });
     return Scaffold(
-        body: Center(
-            child: Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Hero(
-          tag: "LottieAnimation",
-          child: Lottie.asset("assets/lottie/meeting.json", width: 150),
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Hero(
+              tag: "LottieAnimation",
+              child: Lottie.asset("assets/lottie/meeting.json", width: 150),
+            ),
+            const Hero(
+              tag: "TitleAnimation",
+              child: Text(
+                "MeetingMinds",
+                style: TextStyle(fontSize: 25.0),
+              ),
+            ),
+          ],
         ),
-        const Hero(
-          tag: "TitleAnimation",
-          child: Text(
-            "MeetingMinds",
-            style: TextStyle(fontSize: 25.0),
-          ),
-        ),
-      ],
-    )));
+      ),
+    );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:video_conferencing/screens/meeting_screen.dart';
 
 class CreateMeeting extends StatefulWidget {
   const CreateMeeting({super.key});
@@ -10,11 +9,15 @@ class CreateMeeting extends StatefulWidget {
 
 TextEditingController codeController = TextEditingController();
 TextEditingController nameController = TextEditingController();
+// var uuid = Uuid();
 
 class _CreateMeetingState extends State<CreateMeeting> {
   @override
   Widget build(BuildContext context) {
+    // String code = uuid.v1.toString();
+    // print(code);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -25,7 +28,7 @@ class _CreateMeetingState extends State<CreateMeeting> {
               const Padding(
                 padding: EdgeInsets.only(bottom: 12.0, left: 5.0),
                 child: Text(
-                  "Your name",
+                  "Your nam e",
                   style: TextStyle(
                       fontSize: 18, color: Color.fromARGB(255, 115, 112, 112)),
                 ),
@@ -106,7 +109,7 @@ class _CreateMeetingState extends State<CreateMeeting> {
                         width: 80.0,
                         height: 80.0,
                         decoration: BoxDecoration(
-                            color: Color(0xff1590D4),
+                            color: const Color(0xff1590D4),
                             borderRadius: BorderRadius.circular(20)),
                         child: const Icon(
                           Icons.mic_rounded,
@@ -133,7 +136,7 @@ class _CreateMeetingState extends State<CreateMeeting> {
                         width: 80.0,
                         height: 80.0,
                         decoration: BoxDecoration(
-                            color: Color(0xff1590D4),
+                            color: const Color(0xff1590D4),
                             borderRadius: BorderRadius.circular(20)),
                         child: const Icon(
                           Icons.present_to_all,
@@ -158,25 +161,20 @@ class _CreateMeetingState extends State<CreateMeeting> {
               Padding(
                 padding: const EdgeInsets.only(top: 28.0, bottom: 20),
                 child: GestureDetector(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 25),
-                    decoration: BoxDecoration(
-                        color: Color(0xff1590D4),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: const Center(
-                      child: Text(
-                        "Create",
-                        style: TextStyle(color: Colors.white, fontSize: 18),
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(vertical: 25),
+                      decoration: BoxDecoration(
+                          color: const Color(0xff1590D4),
+                          borderRadius: BorderRadius.circular(20)),
+                      child: const Center(
+                        child: Text(
+                          "Create",
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
                       ),
                     ),
-                  ),
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const MeetingScreen()),
-                  ),
-                ),
+                    onTap: () => Navigator.pushNamed(context, "/meeting")),
               ),
             ],
           ),

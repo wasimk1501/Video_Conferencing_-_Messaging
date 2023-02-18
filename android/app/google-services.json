@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "833998814224",
+    "project_id": "meetingminds-16596",
+    "storage_bucket": "meetingminds-16596.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833998814224:android:6d042569fca26f404d5e95",
+        "android_client_info": {
+          "package_name": "com.example.video_conferencing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "833998814224-j949rp2gh5rcbjdv719v231chpc51oon.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBP9rvDKIUTMEWd5Y8_Vj982jW1u-QmDC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "833998814224-j949rp2gh5rcbjdv719v231chpc51oon.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
