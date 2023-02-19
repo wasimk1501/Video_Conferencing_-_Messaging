@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:video_conferencing/utils/login_widget.dart';
+import 'package:video_conferencing/utils/signup_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,13 +22,29 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Center(
-            child: Hero(
-                tag: "TitleAnimation",
-                child: Text(
-                  "MeetingMinds \n$userId",
-                  softWrap: true,
-                ))),
+        title: const Hero(
+            tag: "TitleAnimation",
+            child: Text(
+              "MeetingMinds",
+              softWrap: true,
+            )),
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                rEmailController.clear();
+                rPasswordController.clear();
+                rConfirmPasswordController.clear();
+                lEmailController.clear();
+                lPasswordController.clear();
+                FirebaseAuth.instance.signOut();
+              },
+              child: const Text("Logout")),
+          // IconButton(
+          //     onPressed: () {
+          //       // Navigator.pushReplacementNamed(context, "/login");
+          //     },
+          //     icon: const Icon(Icons.logout))
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(

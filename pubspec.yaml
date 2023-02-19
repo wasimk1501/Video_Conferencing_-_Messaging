@@ -35,11 +35,18 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  #animation file plugin
   lottie: ^2.2.0
+  #plugin required for agora to work
   agora_rtc_engine: ^6.1.0
   permission_handler: ^10.2.0
+  #required for firebase signin
   firebase_auth: ^4.2.8
   firebase_core: ^2.6.1
+  #validate email
+  email_validator: ^2.1.17
+  #validate form using multivalidation
+  form_field_validator: ^1.1.0
  
 
 dev_dependencies:

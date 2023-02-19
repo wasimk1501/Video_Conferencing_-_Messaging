@@ -91,7 +91,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
       return AgoraVideoView(
         controller: VideoViewController(
           rtcEngine: agoraEngine,
-          canvas: VideoCanvas(uid: 0),
+          canvas: const VideoCanvas(uid: 0),
         ),
       );
     } else {

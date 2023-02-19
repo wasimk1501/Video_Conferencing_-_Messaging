@@ -1,15 +1,17 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:video_conferencing/screens/create_meeting.dart';
+import 'package:video_conferencing/screens/forget_password_screen.dart';
 import 'package:video_conferencing/screens/home_screen.dart';
 import 'package:video_conferencing/screens/join_with_code.dart';
 import 'package:video_conferencing/screens/login_screen.dart';
 import 'package:video_conferencing/screens/meeting_screen.dart';
 import 'package:video_conferencing/screens/sign_up_screen.dart';
 import 'package:video_conferencing/screens/splash_screen.dart';
+import 'package:video_conferencing/screens/verify_email_screen.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
+final messengerKey = GlobalKey<ScaffoldMessengerState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -24,6 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: navigatorKey,
+      scaffoldMessengerKey: messengerKey,
       title: 'Meeting Minds',
       theme: ThemeData(
         // This is the theme of your application.
@@ -46,6 +49,8 @@ class MyApp extends StatelessWidget {
         '/joinMeeting': (context) => const JoinWithCode(),
         '/signUp': (context) => const SignUpScreen(),
         '/login': (context) => const LoginScreen(),
+        '/forgetPassword': (context) => const ForgetPasswordScreen(),
+        '/verifyEmail': (context) => const VerifyEmailScreen(),
       },
     );
   }
