@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:video_conferencing/main.dart';
 import 'package:video_conferencing/utils/common_widgets.dart';
+import 'package:video_conferencing/utils/password_textfield.dart';
 import 'package:video_conferencing/utils/utils_class.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -57,49 +58,6 @@ Widget _buildEmailTF() {
           validator: (value) {
             if (value!.isEmpty) return "    *Email is required";
             return null;
-          },
-        ),
-      ),
-    ],
-  );
-}
-
-Widget _buildPasswordTF() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      const Text(
-        "Password",
-        style: kLabelStyle,
-      ),
-      const SizedBox(
-        height: 10.0,
-      ),
-      Container(
-        padding: const EdgeInsets.only(bottom: 5.0),
-        alignment: Alignment.centerLeft,
-        decoration: kBoxDecorationStyle,
-        height: 70.0,
-        child: TextFormField(
-          controller: lPasswordController,
-          textInputAction: TextInputAction.done,
-          obscureText: true,
-          style: const TextStyle(
-            fontFamily: 'OpenSans',
-            color: Colors.white,
-          ),
-          decoration: const InputDecoration(
-            border: InputBorder.none,
-            contentPadding: EdgeInsets.only(top: 14.0),
-            prefixIcon: Icon(
-              Icons.lock,
-              color: Colors.white,
-            ),
-            hintText: "Enter your Password",
-            hintStyle: kHintTextStyle,
-          ),
-          validator: (value) {
-            if (value!.isEmpty) return "    *Password is required";
           },
         ),
       ),
@@ -265,7 +223,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               const SizedBox(
                 height: 30.0,
               ),
-              _buildPasswordTF(),
+              PasswordTextField(),
               _buildForgotPasswordBtn(),
               const SizedBox(
                 height: 0.0,

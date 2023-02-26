@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:video_conferencing/screens/home_screen.dart';
+import 'package:flutter/services.dart';
 import 'package:video_conferencing/screens/verify_email_screen.dart';
 import 'package:video_conferencing/utils/auth_widget.dart';
+
+import '../common/colors.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

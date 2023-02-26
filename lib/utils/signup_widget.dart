@@ -73,6 +73,7 @@ Widget _buildEmailTF() {
   );
 }
 
+// bool isPassVisible = false;
 Widget _buildPasswordTF() {
   final passwordValidator = MultiValidator([
     RequiredValidator(errorText: '    *Password is required'),
@@ -105,15 +106,21 @@ Widget _buildPasswordTF() {
             fontFamily: 'OpenSans',
             color: Colors.white,
           ),
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             border: InputBorder.none,
-            contentPadding: EdgeInsets.only(top: 14.0),
-            prefixIcon: Icon(
+            contentPadding: const EdgeInsets.only(top: 14.0),
+            prefixIcon: const Icon(
               Icons.lock,
               color: Colors.white,
             ),
             hintText: "Enter your Password",
-            errorStyle: TextStyle(color: Colors.red),
+            // suffixIcon: isPassVisible
+            //     ? IconButton(
+            //         icon: Icon(Icons.visibility_off_rounded),
+            //         onPressed: () {},
+            //       )
+            //     : const Icon(Icons.visibility_off),
+            errorStyle: const TextStyle(color: Colors.red),
             hintStyle: kHintTextStyle,
           ),
           validator: passwordValidator,
@@ -259,7 +266,6 @@ class _SignUpWidgetState extends State<SignUpWidget> {
         Utils.showSnackbar(e.toString());
       }
     }
-
     //Navigator.of(context) not working
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
@@ -304,9 +310,10 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                     ),
                     _buildConfirmPasswordTF(),
                     _buildRegisterBtn(),
-                    Container(
-                        height: 250.0,
-                        child: Lottie.asset("assets/lottie/login_lottie.json")),
+                    SizedBox(
+                      height: 250.0,
+                      child: Lottie.asset("assets/lottie/login_lottie.json"),
+                    ),
                     haveAccount(),
                   ]),
             ),

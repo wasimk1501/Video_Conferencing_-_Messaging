@@ -1,4 +1,10 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
+import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:video_conferencing/common/colors.dart';
+import 'package:video_conferencing/common/constant.dart';
+import 'package:video_conferencing/utils/joining_options.dart';
+import 'package:video_conferencing/utils/meet_textfield.dart';
 
 class JoinWithCode extends StatefulWidget {
   const JoinWithCode({super.key});
@@ -7,155 +13,130 @@ class JoinWithCode extends StatefulWidget {
   State<JoinWithCode> createState() => _JoinWithCodeState();
 }
 
-TextEditingController nameController = TextEditingController();
 TextEditingController codeController = TextEditingController();
+TextEditingController nameController = TextEditingController();
+
+// var uuid = Uuid();
+bool isPressed = false;
 
 class _JoinWithCodeState extends State<JoinWithCode> {
   @override
   Widget build(BuildContext context) {
+    double blur = isPressed ? 8.0 : 20.0;
+    Offset distance = isPressed ? const Offset(10, 10) : const Offset(25, 25);
     return Scaffold(
+      backgroundColor: NeomorphicColor.primaryColor,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(bottom: 12.0, left: 5.0),
-                child: Text(
-                  "Your name",
-                  style: TextStyle(
-                      fontSize: 18, color: Color.fromARGB(255, 115, 112, 112)),
+        child: Column(
+          children: [
+            const SizedBox(height: 20.0),
+            Row(
+              children: [
+                IconButton(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: TextColor.textColor,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-              ),
-              TextField(
-                controller: nameController,
-                keyboardType: TextInputType.name,
-                textCapitalization: TextCapitalization.words,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                    alignLabelWithHint: false,
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 25.0, vertical: 25),
-                    hintText: "Enter your name"),
-              ),
-              const SizedBox(
-                height: 25.0,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(bottom: 12.0, left: 5.0),
-                child: Text(
-                  "Meeting code",
-                  style: TextStyle(
-                      fontSize: 18, color: Color.fromARGB(255, 115, 112, 112)),
+                Text(
+                  "Enter the code",
+                  style: GoogleFonts.comfortaa(
+                      fontSize: AppFont.normalFontSize,
+                      fontWeight: FontWeight.bold,
+                      color: TextColor.textColor),
                 ),
-              ),
-              TextField(
-                controller: codeController,
-                keyboardType: TextInputType.name,
-                textCapitalization: TextCapitalization.words,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                    alignLabelWithHint: false,
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 25.0, vertical: 25),
-                    hintText: "eg. 123456"),
-              ),
-              const SizedBox(
-                height: 40.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ],
+            ),
+            SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 80.0,
-                        height: 80.0,
-                        decoration: BoxDecoration(
-                          color: const Color(0xff1590D4),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: const Icon(
-                          Icons.videocam,
-                          size: 40.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          "Video",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Color.fromARGB(255, 78, 77, 77),
-                          ),
-                        ),
-                      ),
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  MeetTextfield(
+                    controller: nameController,
+                    name: "Your name",
+                    hintText: "eg. Wasim Khan",
+                    keyboardType: TextInputType.name,
+                  ),
+                  const SizedBox(
+                    height: 25.0,
+                  ),
+                  MeetTextfield(
+                    controller: codeController,
+                    name: "Meeting code",
+                    hintText: "eg. 123456",
+                    keyboardType: TextInputType.number,
+                  ),
+                  const SizedBox(
+                    height: 40.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      JoiningOption(
+                          optionName: "Video",
+                          optionIcon: Icons.video_camera_front),
+                      JoiningOption(optionName: "Audio", optionIcon: Icons.mic),
+                      JoiningOption(
+                          optionName: "Share Screen",
+                          optionIcon: Icons.present_to_all),
                     ],
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 80.0,
-                        height: 80.0,
-                        decoration: BoxDecoration(
-                            color: const Color(0xff1590D4),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: const Icon(
-                          Icons.mic_rounded,
-                          size: 40.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          "Audio",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Color.fromARGB(255, 78, 77, 77),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 28.0, bottom: 20),
+                    child: GestureDetector(
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(vertical: 25),
+                          decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: NeomorphicColor.lightShadow,
+                                  blurRadius: blur,
+                                  offset: -distance,
+                                  inset: true,
+                                ),
+                                BoxShadow(
+                                  color: Colors.white,
+                                  blurRadius: blur,
+                                  offset: distance,
+                                  inset: true,
+                                ),
+                              ],
+                              color: NeomorphicColor.primaryColor,
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(20.0))),
+                          child: Center(
+                            child: Text(
+                              "Join",
+                              style: GoogleFonts.comfortaa(
+                                  color: Colors.blue,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 80.0,
-                        height: 80.0,
-                        decoration: BoxDecoration(
-                            color: const Color(0xff1590D4),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: const Icon(
-                          Icons.present_to_all,
-                          size: 40.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          "Share Screen",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Color.fromARGB(255, 78, 77, 77),
-                          ),
-                        ),
-                      ),
-                    ],
+                        onTap: () {
+                          setState(() {
+                            isPressed = !isPressed;
+                          });
+                          // Navigator.pushNamed(context, "/meeting");
+                        }),
                   ),
                 ],
-              )
-            ],
-          ),
+              ),
+            ),
+          ],
         ),
       ),
     );

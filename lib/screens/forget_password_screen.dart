@@ -55,7 +55,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         color: Colors.white),
                   ),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -98,6 +98,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                               .hasMatch(value)) {
                             return "    *Invalid email address";
                           }
+                          return null;
                           // else if (EmailValidator.validate(value)) {
                           //   return "Enter the valid email";
                           // }
