@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
 import 'package:video_conferencing/common/colors.dart';
 import 'package:video_conferencing/common/constant.dart';
 
@@ -15,7 +14,7 @@ class SplashScreen extends StatelessWidget {
       Navigator.pushReplacementNamed(context, '/login');
     });
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         height: double.infinity,
         child: Stack(
           children: [

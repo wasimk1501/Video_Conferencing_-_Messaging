@@ -50,6 +50,8 @@ dependencies:
   google_fonts: ^4.0.3
   very_good_analysis: ^4.0.0+1
   flutter_inset_box_shadow: ^1.0.8
+  font_awesome_flutter: ^10.4.0
+  # flutter_zoom_drawer: ^3.0.3
  
 
 dev_dependencies:

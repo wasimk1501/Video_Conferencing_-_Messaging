@@ -63,6 +63,7 @@ Widget _buildEmailTF() {
                 .hasMatch(value)) {
               return "    *Invalid email address";
             }
+            return null;
             // else if (EmailValidator.validate(value)) {
             //   return "Enter the valid email";
             // }
@@ -106,21 +107,15 @@ Widget _buildPasswordTF() {
             fontFamily: 'OpenSans',
             color: Colors.white,
           ),
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: InputBorder.none,
-            contentPadding: const EdgeInsets.only(top: 14.0),
-            prefixIcon: const Icon(
+            contentPadding: EdgeInsets.only(top: 14.0),
+            prefixIcon: Icon(
               Icons.lock,
               color: Colors.white,
             ),
             hintText: "Enter your Password",
-            // suffixIcon: isPassVisible
-            //     ? IconButton(
-            //         icon: Icon(Icons.visibility_off_rounded),
-            //         onPressed: () {},
-            //       )
-            //     : const Icon(Icons.visibility_off),
-            errorStyle: const TextStyle(color: Colors.red),
+            errorStyle: TextStyle(color: Colors.red),
             hintStyle: kHintTextStyle,
           ),
           validator: passwordValidator,
@@ -131,7 +126,6 @@ Widget _buildPasswordTF() {
 }
 
 Widget _buildConfirmPasswordTF() {
-  String? confirmPassword;
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
@@ -283,7 +277,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
         ),
         Form(
           key: formKey,
-          child: Container(
+          child: SizedBox(
             height: double.infinity,
             child: SingleChildScrollView(
               padding: const EdgeInsets.only(

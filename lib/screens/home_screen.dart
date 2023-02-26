@@ -5,9 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:video_conferencing/common/colors.dart';
 import 'package:video_conferencing/common/constant.dart';
-import 'package:video_conferencing/screens/forget_password_screen.dart';
-import 'package:video_conferencing/utils/login_widget.dart';
-import 'package:video_conferencing/utils/signup_widget.dart';
+import '../utils/drawer/app_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,12 +19,14 @@ class _HomeScreenState extends State<HomeScreen> {
   final userId = FirebaseAuth.instance.currentUser!.uid;
   @override
   Widget build(BuildContext context) {
-    bool isDesktop(context) => MediaQuery.of(context).size.width >= 600;
+    // bool isDesktop(context) => MediaQuery.of(context).size.width >= 600;
     bool isMobile(BuildContext context) =>
         MediaQuery.of(context).size.width < 600;
     return Scaffold(
       backgroundColor: NeomorphicColor.primaryColor,
+      drawer: AppDrawer(),
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: TextColor.textColor, size: 30.0),
         centerTitle: true,
         backgroundColor: NeomorphicColor.primaryColor,
         elevation: 0,
@@ -38,30 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontWeight: FontWeight.bold, color: AppColor.themeColor),
               softWrap: true,
             )),
-        actions: [
-          TextButton(
-            onPressed: () {
-              rEmailController.clear();
-              rPasswordController.clear();
-              rConfirmPasswordController.clear();
-              lEmailController.clear();
-              lPasswordController.clear();
-              resetEmailController.clear();
-              FirebaseAuth.instance.signOut();
-            },
-            child: Text("Logout",
-                style: GoogleFonts.comfortaa(
-                    color: TextColor.textColor,
-                    fontSize: AppFont.smallFontSize,
-                    decoration: TextDecoration.underline,
-                    decorationStyle: TextDecorationStyle.solid)),
-          ),
-          // IconButton(
-          //     onPressed: () {
-          //       // Navigator.pushReplacementNamed(context, "/login");
-          //     },
-          //     icon: const Icon(Icons.logout))
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -79,6 +55,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: TextColor.textColor,
                             fontSize: AppFont.normalFontSize),
                       )),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
                   Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -115,14 +94,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Icon(Icons.add, color: TextColor.textColor),
+                              const Icon(Icons.add, color: AppColor.themeColor),
                               const SizedBox(
                                 width: 20,
                               ),
                               Text(
                                 "Create a new meeting",
                                 style: GoogleFonts.comfortaa(
-                                    color: TextColor.textColor,
+                                    color: AppColor.themeColor,
                                     fontWeight: FontWeight.bold,
                                     fontSize: AppFont.normalFontSize),
                               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:video_conferencing/common/colors.dart';
 import 'package:video_conferencing/common/constant.dart';
@@ -36,8 +37,8 @@ class _CreateMeetingState extends State<CreateMeeting> {
             Row(
               children: [
                 IconButton(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 10.0),
                   icon: const Icon(
                     Icons.arrow_back_ios_new,
                     color: TextColor.textColor,
@@ -94,8 +95,8 @@ class _CreateMeetingState extends State<CreateMeeting> {
                         child: JoiningOption(
                             optionName: "Video",
                             optionIcon: isVideo
-                                ? Icons.videocam_outlined
-                                : Icons.videocam_off_outlined),
+                                ? FontAwesomeIcons.video
+                                : FontAwesomeIcons.videoSlash),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -106,8 +107,8 @@ class _CreateMeetingState extends State<CreateMeeting> {
                         child: JoiningOption(
                             optionName: "Audio",
                             optionIcon: isAudio
-                                ? Icons.mic_outlined
-                                : Icons.mic_off_outlined),
+                                ? FontAwesomeIcons.microphone
+                                : FontAwesomeIcons.microphoneSlash),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -118,7 +119,7 @@ class _CreateMeetingState extends State<CreateMeeting> {
                         child: JoiningOption(
                             optionName: "Share Screen",
                             optionIcon: isShareScreen
-                                ? Icons.present_to_all
+                                ? FontAwesomeIcons.mobileScreen
                                 : Icons.cancel_presentation_outlined),
                       ),
                     ],

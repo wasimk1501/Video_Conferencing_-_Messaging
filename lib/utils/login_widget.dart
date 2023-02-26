@@ -203,7 +203,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             gradient: gradient,
           ),
         ),
-        Container(
+        SizedBox(
           height: double.infinity,
           child: SingleChildScrollView(
             padding: const EdgeInsets.only(
@@ -223,7 +223,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               const SizedBox(
                 height: 30.0,
               ),
-              PasswordTextField(),
+              const PasswordTextField(),
               _buildForgotPasswordBtn(),
               const SizedBox(
                 height: 0.0,

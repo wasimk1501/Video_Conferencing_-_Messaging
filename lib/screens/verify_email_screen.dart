@@ -104,7 +104,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                             color: Colors.white),
                       ),
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     Container(
                       padding: const EdgeInsets.symmetric(
                           vertical: 25.0, horizontal: 15.0),

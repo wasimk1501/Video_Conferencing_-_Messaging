@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:video_conferencing/common/colors.dart';
 import 'package:video_conferencing/common/constant.dart';
@@ -17,13 +18,15 @@ TextEditingController codeController = TextEditingController();
 TextEditingController nameController = TextEditingController();
 
 // var uuid = Uuid();
-bool isPressed = false;
+bool isAudio = false;
+bool isVideo = false;
+bool isShareScreen = false;
 
 class _JoinWithCodeState extends State<JoinWithCode> {
   @override
   Widget build(BuildContext context) {
-    double blur = isPressed ? 8.0 : 20.0;
-    Offset distance = isPressed ? const Offset(10, 10) : const Offset(25, 25);
+    double blur = 8.0;
+    Offset distance = const Offset(10, 10);
     return Scaffold(
       backgroundColor: NeomorphicColor.primaryColor,
       resizeToAvoidBottomInset: false,
@@ -34,8 +37,8 @@ class _JoinWithCodeState extends State<JoinWithCode> {
             Row(
               children: [
                 IconButton(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 10.0),
                   icon: const Icon(
                     Icons.arrow_back_ios_new,
                     color: TextColor.textColor,
@@ -82,14 +85,43 @@ class _JoinWithCodeState extends State<JoinWithCode> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      JoiningOption(
-                          optionName: "Video",
-                          optionIcon: Icons.video_camera_front),
-                      JoiningOption(optionName: "Audio", optionIcon: Icons.mic),
-                      JoiningOption(
-                          optionName: "Share Screen",
-                          optionIcon: Icons.present_to_all),
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isVideo = !isVideo;
+                          });
+                        },
+                        child: JoiningOption(
+                            optionName: "Video",
+                            optionIcon: isVideo
+                                ? FontAwesomeIcons.video
+                                : FontAwesomeIcons.videoSlash),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isAudio = !isAudio;
+                          });
+                        },
+                        child: JoiningOption(
+                            optionName: "Audio",
+                            optionIcon: isAudio
+                                ? FontAwesomeIcons.microphone
+                                : FontAwesomeIcons.microphoneSlash),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isShareScreen = !isShareScreen;
+                          });
+                        },
+                        child: JoiningOption(
+                            optionName: "Share Screen",
+                            optionIcon: isShareScreen
+                                ? FontAwesomeIcons.mobileScreen
+                                : Icons.cancel_presentation_outlined),
+                      ),
                     ],
                   ),
                   Padding(
@@ -127,9 +159,6 @@ class _JoinWithCodeState extends State<JoinWithCode> {
                           ),
                         ),
                         onTap: () {
-                          setState(() {
-                            isPressed = !isPressed;
-                          });
                           // Navigator.pushNamed(context, "/meeting");
                         }),
                   ),
