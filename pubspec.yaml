@@ -47,9 +47,13 @@ dependencies:
   email_validator: ^2.1.17
   #validate form using multivalidation
   form_field_validator: ^1.1.0
+  # Google font
   google_fonts: ^4.0.3
+  #linting tool
   very_good_analysis: ^4.0.0+1
+  #plugin for inner shade using boxshadow
   flutter_inset_box_shadow: ^1.0.8
+  #awesome icon
   font_awesome_flutter: ^10.4.0
   # flutter_zoom_drawer: ^3.0.3
  

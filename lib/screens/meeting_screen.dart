@@ -12,11 +12,11 @@ class MeetingScreen extends StatefulWidget {
 }
 
 class _MeetingScreenState extends State<MeetingScreen> {
-  String channelName = "meet1";
+  String channelName = "MeetingMinds100";
   String token = tempToken;
 
   int uid = 0; // uid of the local user
-
+  bool muted = false;
   int? _remoteUid; // uid of the remote user
   bool _isJoined = false; // Indicates if the local user has joined the channel
   late RtcEngine agoraEngine; // Agora engine instance
@@ -42,43 +42,42 @@ class _MeetingScreenState extends State<MeetingScreen> {
     return MaterialApp(
       scaffoldMessengerKey: scaffoldMessengerKey,
       home: Scaffold(
+          backgroundColor: Colors.black,
           appBar: AppBar(
-            title: const Text('Get started with Video Calling'),
+            title: const Text('Video Calling'),
+            actions: [
+              Row(
+                children: <Widget>[
+                  ElevatedButton(
+                    onPressed: _isJoined ? null : () => {join()},
+                    child: const Text("Join"),
+                  ),
+                  const SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: _isJoined ? () => {leave()} : null,
+                    child: const Text("Leave"),
+                  ),
+                ],
+              ),
+            ],
           ),
-          body: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          body: Stack(
             children: [
               // Container for the local video
+              Center(child: _remoteVideo()),
               Container(
-                height: 240,
+                height: 150,
+                width: 130,
                 decoration: BoxDecoration(border: Border.all()),
                 child: Center(child: _localPreview()),
               ),
               const SizedBox(height: 10),
               //Container for the Remote video
-              Container(
-                height: 240,
-                decoration: BoxDecoration(border: Border.all()),
-                child: Center(child: _remoteVideo()),
-              ),
+
+              _toolbar(),
+
               // Button Row
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: _isJoined ? null : () => {join()},
-                      child: const Text("Join"),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: _isJoined ? () => {leave()} : null,
-                      child: const Text("Leave"),
-                    ),
-                  ),
-                ],
-              ),
+
               // Button Row ends
             ],
           )),
@@ -195,5 +194,68 @@ class _MeetingScreenState extends State<MeetingScreen> {
     await agoraEngine.leaveChannel();
     agoraEngine.release();
     super.dispose();
+  }
+
+  Widget _toolbar() {
+    return Container(
+      alignment: Alignment.bottomCenter,
+      padding: const EdgeInsets.symmetric(vertical: 48),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          RawMaterialButton(
+            onPressed: _onToggleMute,
+            child: Icon(
+              muted ? Icons.mic_off : Icons.mic,
+              color: muted ? Colors.white : Colors.blueAccent,
+              size: 20.0,
+            ),
+            shape: const CircleBorder(),
+            elevation: 2.0,
+            fillColor: muted ? Colors.blueAccent : Colors.white,
+            padding: const EdgeInsets.all(12.0),
+          ),
+          RawMaterialButton(
+            onPressed: () => _onCallEnd(context),
+            shape: const CircleBorder(),
+            elevation: 2.0,
+            fillColor: Colors.redAccent,
+            padding: const EdgeInsets.all(15.0),
+            child: const Icon(
+              Icons.call_end,
+              color: Colors.white,
+              size: 35.0,
+            ),
+          ),
+          RawMaterialButton(
+            onPressed: _onSwitchCamera,
+            child: const Icon(
+              Icons.switch_camera,
+              color: Colors.blueAccent,
+              size: 20.0,
+            ),
+            shape: const CircleBorder(),
+            elevation: 2.0,
+            fillColor: Colors.white,
+            padding: const EdgeInsets.all(12.0),
+          )
+        ],
+      ),
+    );
+  }
+
+  void _onCallEnd(BuildContext context) {
+    Navigator.pop(context);
+  }
+
+  void _onToggleMute() {
+    setState(() {
+      muted = !muted;
+    });
+    agoraEngine.muteLocalAudioStream(muted);
+  }
+
+  void _onSwitchCamera() {
+    agoraEngine.switchCamera();
   }
 }
