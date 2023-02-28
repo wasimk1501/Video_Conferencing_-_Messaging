@@ -12,6 +12,8 @@ class MeetingScreen extends StatefulWidget {
 }
 
 class _MeetingScreenState extends State<MeetingScreen> {
+  static final _user = <int>[];
+  final _infoString = <String>[];
   String channelName = "MeetingMinds100";
   String token = tempToken;
 
@@ -45,21 +47,22 @@ class _MeetingScreenState extends State<MeetingScreen> {
           backgroundColor: Colors.black,
           appBar: AppBar(
             title: const Text('Video Calling'),
-            actions: [
-              Row(
-                children: <Widget>[
-                  ElevatedButton(
-                    onPressed: _isJoined ? null : () => {join()},
-                    child: const Text("Join"),
-                  ),
-                  const SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: _isJoined ? () => {leave()} : null,
-                    child: const Text("Leave"),
-                  ),
-                ],
-              ),
-            ],
+            centerTitle: true,
+            // actions: [
+            //   Row(
+            //     children: <Widget>[
+            //       ElevatedButton(
+            //         onPressed: _isJoined ? null : () => {join()},
+            //         child: const Text("Join"),
+            //       ),
+            //       const SizedBox(width: 10),
+            //       ElevatedButton(
+            //         onPressed: _isJoined ? () => {leave()} : null,
+            //         child: const Text("Leave"),
+            //       ),
+            //     ],
+            //   ),
+            // ],
           ),
           body: Stack(
             children: [
@@ -72,13 +75,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                 child: Center(child: _localPreview()),
               ),
               const SizedBox(height: 10),
-              //Container for the Remote video
-
               _toolbar(),
-
-              // Button Row
-
-              // Button Row ends
             ],
           )),
     );
@@ -161,11 +158,11 @@ class _MeetingScreenState extends State<MeetingScreen> {
         },
       ),
     );
+    join();
   }
 
   void join() async {
     await agoraEngine.startPreview();
-
     // Set channel options including the client role and channel profile
     ChannelMediaOptions options = const ChannelMediaOptions(
       clientRoleType: ClientRoleType.clientRoleBroadcaster,
@@ -191,6 +188,9 @@ class _MeetingScreenState extends State<MeetingScreen> {
 // Release the resources when you leave
   @override
   void dispose() async {
+    //clear user
+    _user.clear();
+    //destroy agora sdk
     await agoraEngine.leaveChannel();
     agoraEngine.release();
     super.dispose();
@@ -245,6 +245,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
   }
 
   void _onCallEnd(BuildContext context) {
+    leave();
     Navigator.pop(context);
   }
 
