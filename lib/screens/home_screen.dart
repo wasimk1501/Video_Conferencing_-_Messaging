@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
@@ -16,9 +18,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final user = FirebaseAuth.instance.currentUser!.email;
-  final userId = FirebaseAuth.instance.currentUser!.uid;
+  var userId = FirebaseAuth.instance.currentUser!.displayName;
   @override
   Widget build(BuildContext context) {
+    print(" hello i am here $userId");
     // bool isDesktop(context) => MediaQuery.of(context).size.width >= 600;
     bool isMobile(BuildContext context) =>
         MediaQuery.of(context).size.width < 600;

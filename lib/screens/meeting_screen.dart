@@ -17,7 +17,6 @@ class _MeetingScreenState extends State<MeetingScreen> {
   final _infoString = <String>[];
   String channelName = "MeetingMinds100";
   String token = tempToken;
-
   int uid = 0; // uid of the local user
   bool muted = false;
   int? _remoteUid; // uid of the remote user
@@ -26,12 +25,6 @@ class _MeetingScreenState extends State<MeetingScreen> {
 
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>(); // Global key to access the scaffold
-
-  showMessage(String message) {
-    scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
-      content: Text(message),
-    ));
-  }
 
   @override
   void initState() {
@@ -259,5 +252,11 @@ class _MeetingScreenState extends State<MeetingScreen> {
 
   void _onSwitchCamera() {
     agoraEngine.switchCamera();
+  }
+
+  showMessage(String message) {
+    scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
+      content: Text(message),
+    ));
   }
 }
