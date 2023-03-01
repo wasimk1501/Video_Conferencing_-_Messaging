@@ -55,6 +55,7 @@ dependencies:
   flutter_inset_box_shadow: ^1.0.8
   #awesome icon
   font_awesome_flutter: ^10.4.0
+  flutter_share: ^2.0.0
   # flutter_zoom_drawer: ^3.0.3
  
 

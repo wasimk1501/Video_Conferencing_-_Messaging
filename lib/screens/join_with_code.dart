@@ -48,37 +48,34 @@ class _JoinWithCodeState extends State<JoinWithCode> {
                   },
                 ),
                 Text(
-                  "Enter the code",
+                  " Enter the Meeting code",
+                  textAlign: TextAlign.center,
                   style: GoogleFonts.comfortaa(
                       fontSize: AppFont.normalFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: TextColor.textColor),
+                      color: AppColor.themeColor,
+                      fontWeight: FontWeight.bold),
                 ),
               ],
             ),
             SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const SizedBox(
                     height: 20.0,
                   ),
-                  MeetTextfield(
-                    controller: nameController,
-                    name: "Your name",
-                    hintText: "eg. Wasim Khan",
-                    keyboardType: TextInputType.name,
-                  ),
-                  const SizedBox(
-                    height: 25.0,
+                  Image.asset(
+                    "assets/images/room_join_vector.png",
+                    width: 300.0,
                   ),
                   MeetTextfield(
                     controller: codeController,
-                    name: "Meeting code",
-                    hintText: "eg. 123456",
-                    keyboardType: TextInputType.number,
+                    name: "Enter Meeting Code",
+                    hintText: "Code",
+                    keyboardType: TextInputType.name,
+                    readOnly: false,
                   ),
                   const SizedBox(
                     height: 40.0,

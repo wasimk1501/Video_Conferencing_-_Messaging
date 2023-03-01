@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (context) => const HomeScreen(),
         '/splash': (context) => const SplashScreen(),
-        '/meeting': (context) => const MeetingScreen(),
+        // '/meeting': (context) => const MeetingScreen(),
         '/createMeeting': (context) => const CreateMeeting(),
         '/joinMeeting': (context) => const JoinWithCode(),
         '/signUp': (context) => const SignUpScreen(),

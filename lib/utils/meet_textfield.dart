@@ -8,6 +8,7 @@ import '../common/colors.dart';
 class MeetTextfield extends StatelessWidget {
   final TextEditingController controller;
   final String name;
+  final bool? readOnly;
   final String? hintText;
   final TextInputType? keyboardType;
   const MeetTextfield({
@@ -15,6 +16,7 @@ class MeetTextfield extends StatelessWidget {
     required this.controller,
     required this.name,
     this.hintText,
+    this.readOnly,
     this.keyboardType,
   });
 
@@ -57,6 +59,7 @@ class MeetTextfield extends StatelessWidget {
                 color: Colors.blue, fontSize: AppFont.normalFontSize),
             controller: controller,
             keyboardType: keyboardType,
+            readOnly: readOnly!,
             textCapitalization: TextCapitalization.words,
             decoration: InputDecoration(
                 border: InputBorder.none,

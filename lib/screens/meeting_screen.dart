@@ -5,7 +5,8 @@ import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:video_conferencing/utils/settings.dart';
 
 class MeetingScreen extends StatefulWidget {
-  const MeetingScreen({super.key});
+  final String channelName;
+  const MeetingScreen({super.key, required this.channelName});
 
   @override
   State<MeetingScreen> createState() => _MeetingScreenState();
