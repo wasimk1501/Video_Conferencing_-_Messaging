@@ -187,6 +187,9 @@ class _CreateMeetingState extends State<CreateMeeting> {
                                 MaterialPageRoute(
                                     builder: (context) => MeetingScreen(
                                           channelName: roomId,
+                                          isAudio: isAudio,
+                                          isVideo: isVideo,
+                                          isCameraFront: true,
                                         )));
                           } else {
                             Utils.showSnackbar(

@@ -6,7 +6,15 @@ import 'package:video_conferencing/utils/settings.dart';
 
 class MeetingScreen extends StatefulWidget {
   final String channelName;
-  const MeetingScreen({super.key, required this.channelName});
+  final bool isAudio;
+  final bool isVideo;
+  final bool? isCameraFront;
+  const MeetingScreen(
+      {super.key,
+      required this.channelName,
+      required this.isAudio,
+      required this.isVideo,
+      this.isCameraFront});
 
   @override
   State<MeetingScreen> createState() => _MeetingScreenState();
@@ -15,12 +23,12 @@ class MeetingScreen extends StatefulWidget {
 class _MeetingScreenState extends State<MeetingScreen> {
   static final _user = <int>[];
   final _infoString = <String>[];
-  String channelName = "MeetingMinds100";
+  // String? channelName = widget.channelName;
   String token = tempToken;
   int uid = 0; // uid of the local user
   bool muted = false;
   int? _remoteUid; // uid of the remote user
-  bool _isJoined = false; // Indicates if the local user has joined the channel
+  bool _isJoined = true; // Indicates if the local user has joined the channel
   late RtcEngine agoraEngine; // Agora engine instance
 
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
@@ -99,7 +107,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
         controller: VideoViewController.remote(
           rtcEngine: agoraEngine,
           canvas: VideoCanvas(uid: _remoteUid),
-          connection: RtcConnection(channelId: channelName),
+          connection: RtcConnection(channelId: widget.channelName),
         ),
       );
     } else {
@@ -165,7 +173,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
 
     await agoraEngine.joinChannel(
       token: token,
-      channelId: channelName,
+      channelId: widget.channelName,
       options: options,
       uid: uid,
     );

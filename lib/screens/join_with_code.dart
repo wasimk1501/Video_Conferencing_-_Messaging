@@ -6,6 +6,10 @@ import 'package:video_conferencing/common/colors.dart';
 import 'package:video_conferencing/common/constant.dart';
 import 'package:video_conferencing/utils/joining_options.dart';
 import 'package:video_conferencing/utils/meet_textfield.dart';
+import 'package:video_conferencing/utils/other_utils/other_utils.dart';
+
+import '../utils/utils_class.dart';
+import 'meeting_screen.dart';
 
 class JoinWithCode extends StatefulWidget {
   const JoinWithCode({super.key});
@@ -14,13 +18,11 @@ class JoinWithCode extends StatefulWidget {
   State<JoinWithCode> createState() => _JoinWithCodeState();
 }
 
-TextEditingController codeController = TextEditingController();
-TextEditingController nameController = TextEditingController();
+TextEditingController meetTxtController = TextEditingController();
 
-// var uuid = Uuid();
 bool isAudio = false;
 bool isVideo = false;
-bool isShareScreen = false;
+bool isSwitchCamera = false;
 
 class _JoinWithCodeState extends State<JoinWithCode> {
   @override
@@ -67,13 +69,16 @@ class _JoinWithCodeState extends State<JoinWithCode> {
                     height: 20.0,
                   ),
                   Image.asset(
-                    "assets/images/room_join_vector.png",
-                    width: 300.0,
+                    "assets/images/room_join_vector2.png",
+                    width: 350.0,
+                  ),
+                  const SizedBox(
+                    height: 20.0,
                   ),
                   MeetTextfield(
-                    controller: codeController,
+                    controller: meetTxtController,
                     name: "Enter Meeting Code",
-                    hintText: "Code",
+                    hintText: "Room Id",
                     keyboardType: TextInputType.name,
                     readOnly: false,
                   ),
@@ -84,10 +89,17 @@ class _JoinWithCodeState extends State<JoinWithCode> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isVideo = !isVideo;
-                          });
+                        onTap: () async {
+                          bool isPermissionGranted =
+                              await handlePermissionsForCall(context);
+                          if (isPermissionGranted) {
+                            setState(() {
+                              isVideo = !isVideo;
+                            });
+                          } else {
+                            Utils.showSnackbar(
+                                "Failed, Microphone Permission Required for Video Call");
+                          }
                         },
                         child: JoiningOption(
                             optionName: "Video",
@@ -96,10 +108,17 @@ class _JoinWithCodeState extends State<JoinWithCode> {
                                 : FontAwesomeIcons.videoSlash),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isAudio = !isAudio;
-                          });
+                        onTap: () async {
+                          bool isPermissionGranted =
+                              await handlePermissionsForCall(context);
+                          if (isPermissionGranted) {
+                            setState(() {
+                              isAudio = !isAudio;
+                            });
+                          } else {
+                            Utils.showSnackbar(
+                                "Failed, Microphone Permission Required for Video Call");
+                          }
                         },
                         child: JoiningOption(
                             optionName: "Audio",
@@ -108,16 +127,12 @@ class _JoinWithCodeState extends State<JoinWithCode> {
                                 : FontAwesomeIcons.microphoneSlash),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isShareScreen = !isShareScreen;
-                          });
-                        },
+                        onTap: () async {},
                         child: JoiningOption(
-                            optionName: "Share Screen",
-                            optionIcon: isShareScreen
-                                ? FontAwesomeIcons.mobileScreen
-                                : Icons.cancel_presentation_outlined),
+                            optionName: "Switch Camera",
+                            optionIcon: isSwitchCamera
+                                ? Icons.camera_front_rounded
+                                : Icons.camera_rear_rounded),
                       ),
                     ],
                   ),
@@ -128,23 +143,25 @@ class _JoinWithCodeState extends State<JoinWithCode> {
                           width: double.infinity,
                           padding: const EdgeInsets.symmetric(vertical: 25),
                           decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: NeomorphicColor.lightShadow,
-                                  blurRadius: blur,
-                                  offset: -distance,
-                                  inset: true,
-                                ),
-                                BoxShadow(
-                                  color: Colors.white,
-                                  blurRadius: blur,
-                                  offset: distance,
-                                  inset: true,
-                                ),
-                              ],
-                              color: NeomorphicColor.primaryColor,
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(20.0))),
+                            boxShadow: [
+                              BoxShadow(
+                                color: NeomorphicColor.lightShadow,
+                                blurRadius: blur,
+                                offset: -distance,
+                                inset: true,
+                              ),
+                              BoxShadow(
+                                color: Colors.white,
+                                blurRadius: blur,
+                                offset: distance,
+                                inset: true,
+                              ),
+                            ],
+                            color: NeomorphicColor.primaryColor,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(20.0),
+                            ),
+                          ),
                           child: Center(
                             child: Text(
                               "Join",
@@ -155,7 +172,29 @@ class _JoinWithCodeState extends State<JoinWithCode> {
                             ),
                           ),
                         ),
-                        onTap: () {
+                        onTap: () async {
+                          if (meetTxtController.text.trim().isNotEmpty) {
+                            bool isPermissionGranted =
+                                await handlePermissionsForCall(context);
+                            if (isPermissionGranted) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MeetingScreen(
+                                            channelName: meetTxtController.text,
+                                            isAudio: isAudio,
+                                            isVideo: isVideo,
+                                            isCameraFront: isSwitchCamera,
+                                          )));
+                            } else {
+                              Utils.showSnackbar(
+                                  "Failed, Microphone Permission Required for Video Call");
+                            }
+                          } else {
+                            Utils.showSnackbar(
+                              "Enter Room Id first",
+                            );
+                          }
                           // Navigator.pushNamed(context, "/meeting");
                         }),
                   ),

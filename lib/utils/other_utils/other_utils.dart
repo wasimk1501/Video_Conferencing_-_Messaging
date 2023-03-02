@@ -1,8 +1,8 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_share/flutter_share.dart';
+
 import 'package:permission_handler/permission_handler.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:video_conferencing/common/colors.dart';
 
 checkNoSignalDigit(int no) {
@@ -20,18 +20,16 @@ String generateRandomString(int len) {
   return List.generate(len, (index) => _chars[r.nextInt(_chars.length)]).join();
 }
 
-void shareToApps(String roomId) async {
-  await FlutterShare.share(
-      title: "Video Call Invite",
-      text:
-          'Hey There, Lets connect via Video Call using MeetingMinds App using code : $roomId');
+void shareToApps(String roomId) {
+  Share.share(
+      'Hey There, Lets connect via Video Call using MeetingMinds App using code : $roomId');
 }
 
 Future<bool> handlePermissionsForCall(BuildContext context) async {
   Map<Permission, PermissionStatus> statuses = await [
     Permission.camera,
     Permission.microphone,
-    Permission.storage,
+    // Permission.storage,
   ].request();
 
   if (statuses[Permission.camera]!.isPermanentlyDenied) {
@@ -41,14 +39,16 @@ Future<bool> handlePermissionsForCall(BuildContext context) async {
       openAppSettings();
     });
     return false;
-  } else if (statuses[Permission.storage]!.isPermanentlyDenied) {
-    showCustomDialog(context, "Permission Required",
-        "Storage Permission Required for Video Call", () {
-      Navigator.pop(context);
-      openAppSettings();
-    });
-    return false;
-  } else if (statuses[Permission.microphone]!.isPermanentlyDenied) {
+  }
+  //  else if (statuses[Permission.storage]!.isPermanentlyDenied) {
+  //   showCustomDialog(context, "Permission Required",
+  //       "Storage Permission Required for Video Call", () {
+  //     Navigator.pop(context);
+  //     openAppSettings();
+  //   });
+  //   return false;
+  // }
+  else if (statuses[Permission.microphone]!.isPermanentlyDenied) {
     showCustomDialog(context, "Permission Required",
         "Microphone Permission Required for Video Call", () {
       Navigator.pop(context);
@@ -57,9 +57,10 @@ Future<bool> handlePermissionsForCall(BuildContext context) async {
     return false;
   }
 
-  if (statuses[Permission.storage]!.isDenied) {
-    return false;
-  } else if (statuses[Permission.camera]!.isDenied) {
+  // if (statuses[Permission.storage]!.isDenied) {
+  //   return false;
+  // } else
+  if (statuses[Permission.camera]!.isDenied) {
     return false;
   } else if (statuses[Permission.microphone]!.isDenied) {
     return false;

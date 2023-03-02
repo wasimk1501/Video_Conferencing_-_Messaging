@@ -55,9 +55,13 @@ dependencies:
   flutter_inset_box_shadow: ^1.0.8
   #awesome icon
   font_awesome_flutter: ^10.4.0
-  flutter_share: ^2.0.0
+  #share plugin
+  share_plus: ^6.3.1
   # flutter_zoom_drawer: ^3.0.3
- 
+  #bottom navigation bar
+  convex_bottom_bar: ^3.2.0
+  #network signal 
+  signal_strength_indicator: ^0.4.1 
 
 dev_dependencies:
   flutter_test:
