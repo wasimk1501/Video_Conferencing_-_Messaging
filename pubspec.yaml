@@ -62,6 +62,8 @@ dependencies:
   convex_bottom_bar: ^3.2.0
   #network signal 
   signal_strength_indicator: ^0.4.1 
+  get: ^4.6.5
+  
 
 dev_dependencies:
   flutter_test:

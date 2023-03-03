@@ -1,13 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:video_conferencing/common/colors.dart';
 import 'package:video_conferencing/screens/create_meeting.dart';
 import 'package:video_conferencing/screens/forget_password_screen.dart';
 import 'package:video_conferencing/screens/home_screen.dart';
 import 'package:video_conferencing/screens/join_with_code.dart';
 import 'package:video_conferencing/screens/login_screen.dart';
-import 'package:video_conferencing/screens/meeting_screen.dart';
 import 'package:video_conferencing/screens/sign_up_screen.dart';
 import 'package:video_conferencing/screens/splash_screen.dart';
 import 'package:video_conferencing/screens/verify_email_screen.dart';

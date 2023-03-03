@@ -186,6 +186,7 @@ class _CreateMeetingState extends State<CreateMeeting> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => MeetingScreen(
+                                          isCreator: true,
                                           channelName: roomId,
                                           isAudio: isAudio,
                                           isVideo: isVideo,

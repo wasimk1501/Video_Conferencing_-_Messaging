@@ -181,6 +181,7 @@ class _JoinWithCodeState extends State<JoinWithCode> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => MeetingScreen(
+                                            isCreator: false,
                                             channelName: meetTxtController.text,
                                             isAudio: isAudio,
                                             isVideo: isVideo,
