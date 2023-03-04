@@ -35,7 +35,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
   final _infoStrings = <String>[];
 
   String token = tempToken;
-  int uid = 0; // uid of the local user
+  // int uid = 0; // uid of the local user
   bool muted = false;
   bool muteVideo = false;
   int? _remoteUid;
@@ -64,7 +64,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
   // Release the resources when you leave
   @override
   void dispose() async {
-    print("\n============ ON DISPOSE ===============\n");
+    log("\n============ ON DISPOSE ===============\n");
     super.dispose();
 
     if (agoraController.meetingTimer != null) {
@@ -81,7 +81,8 @@ class _MeetingScreenState extends State<MeetingScreen> {
 
   @override
   void initState() {
-    print(appId);
+    join();
+    log(appId);
     // Set up an instance of Agora engine
     setupVideoSDKEngine();
     super.initState();
@@ -129,10 +130,10 @@ class _MeetingScreenState extends State<MeetingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isCreator) {
-      log(widget.isCreator.toString());
-      join();
-    }
+    // if (!widget.isCreator) {
+    //   log(widget.isCreator.toString());
+    //   join();
+    // }
     return WillPopScope(
       onWillPop: () async {
         log(_users.toString());
@@ -161,6 +162,17 @@ class _MeetingScreenState extends State<MeetingScreen> {
         return confirm ?? false;
       },
       child: Scaffold(
+        appBar: AppBar(
+          title: Text("Video Call"),
+          actions: [
+            ElevatedButton(
+              child: Text("Join"),
+              onPressed: () {
+                join();
+              },
+            )
+          ],
+        ),
         body: buildNormalVideoUI(),
         bottomNavigationBar: GetBuilder<AgoraController>(builder: (_) {
           return ConvexAppBar(
@@ -241,7 +253,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
     final List<AgoraVideoView> list = [
       AgoraVideoView(
           controller: VideoViewController(
-              rtcEngine: agoraEngine, canvas: VideoCanvas(uid: uid)))
+              rtcEngine: agoraEngine, canvas: VideoCanvas(uid: 0)))
     ];
     _users.forEach((int uid) => list.add(AgoraVideoView(
         controller: VideoViewController(
@@ -326,7 +338,10 @@ class _MeetingScreenState extends State<MeetingScreen> {
         ));
       default:
     }
-    return Container();
+    return Container(
+      color: Colors.red,
+      height: 100,
+    );
   }
 
   Widget buildNormalVideoUI() {
@@ -479,9 +494,9 @@ class _MeetingScreenState extends State<MeetingScreen> {
     }
     await _initAgoraRtcEngine();
     _addAgoraEventHandlers();
-    await agoraEngine.enableWebSdkInteroperability(true);
-    await agoraEngine.setParameters(
-        '''{\"che.video.lowBitRateStreamParameter\":{\"width\":640,\"height\":360,\"frameRate\":30,\"bitRate\":800}}''');
+    // await agoraEngine.enableWebSdkInteroperability(true);
+    // await agoraEngine.setParameters(
+    //     '''{\"che.video.lowBitRateStreamParameter\":{\"width\":640,\"height\":360,\"frameRate\":30,\"bitRate\":800}}''');
     join();
   }
 
@@ -505,9 +520,9 @@ class _MeetingScreenState extends State<MeetingScreen> {
           });
           showMessage(
               "Local user uid:${connection.localUid} joined the channel");
-          // setState(() {
-          //   isSomeOneJoinedCall = true;
-          // });
+          setState(() {
+            isSomeOneJoinedCall = true;
+          });
         },
         onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
           log("======================================");
@@ -586,7 +601,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
       token: token,
       channelId: widget.channelName,
       options: options,
-      uid: uid,
+      uid: 0,
     );
   }
 
