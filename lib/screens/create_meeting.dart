@@ -9,6 +9,7 @@ import 'package:video_conferencing/utils/meet_textfield.dart';
 import 'package:video_conferencing/utils/other_utils/other_utils.dart';
 import 'package:video_conferencing/utils/utils_class.dart';
 
+import 'call_screen.dart';
 import 'meeting_screen.dart';
 
 class CreateMeeting extends StatefulWidget {
@@ -182,16 +183,23 @@ class _CreateMeetingState extends State<CreateMeeting> {
                           bool isPermissionGranted =
                               await handlePermissionsForCall(context);
                           if (isPermissionGranted) {
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => MeetingScreen(
+                            //               isCreator: true,
+                            //               channelName: roomId,
+                            //               isAudio: isAudio,
+                            //               isVideo: isVideo,
+                            //               isCameraFront: true,
+                            //             )));
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MeetingScreen(
-                                          isCreator: true,
-                                          channelName: roomId,
-                                          isAudio: isAudio,
-                                          isVideo: isVideo,
-                                          isCameraFront: true,
-                                        )));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    CallScreen(channelName: roomId),
+                              ),
+                            );
                           } else {
                             Utils.showSnackbar(
                                 "Failed, Microphone Permission Required for Video Call");

@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:video_conferencing/common/colors.dart';
 import 'package:video_conferencing/common/constant.dart';
+import 'package:video_conferencing/screens/call_screen.dart';
 import 'package:video_conferencing/utils/joining_options.dart';
 import 'package:video_conferencing/utils/meet_textfield.dart';
 import 'package:video_conferencing/utils/other_utils/other_utils.dart';
@@ -177,16 +178,23 @@ class _JoinWithCodeState extends State<JoinWithCode> {
                             bool isPermissionGranted =
                                 await handlePermissionsForCall(context);
                             if (isPermissionGranted) {
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => MeetingScreen(
+                              //               isCreator: false,
+                              //               channelName: meetTxtController.text,
+                              //               isAudio: isAudio,
+                              //               isVideo: isVideo,
+                              //               isCameraFront: isSwitchCamera,
+                              //             ),),);
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MeetingScreen(
-                                            isCreator: false,
-                                            channelName: meetTxtController.text,
-                                            isAudio: isAudio,
-                                            isVideo: isVideo,
-                                            isCameraFront: isSwitchCamera,
-                                          )));
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CallScreen(
+                                      channelName: meetTxtController.text),
+                                ),
+                              );
                             } else {
                               Utils.showSnackbar(
                                   "Failed, Microphone Permission Required for Video Call");
