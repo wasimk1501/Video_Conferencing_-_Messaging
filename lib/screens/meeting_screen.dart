@@ -77,6 +77,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
     //destroy agora sdk
     await agoraEngine.leaveChannel();
     agoraEngine.release();
+    // super.dispose();
   }
 
   @override

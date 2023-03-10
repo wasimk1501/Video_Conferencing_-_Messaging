@@ -26,6 +26,19 @@ bool isSwitchCamera = false;
 
 class _JoinWithCodeState extends State<JoinWithCode> {
   @override
+  void initState() {
+    meetTxtController.clear();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    meetTxtController.clear();
+    
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double blur = 8.0;
     Offset distance = const Offset(10, 10);
