@@ -1,5 +1,5 @@
 const String appId = '4f828c6390284584924f8e38eedfd64b';
-const String channel = "MeetingMinds94";
+const String channel = "MeetingMinds92";
 const String tempToken =
-    '007eJxTYIh8EWWzPJGJcRU3W0fa0vzUyqMyFtHHNjqf4JDZtHryhjkKDCZpFkYWyWbGlgZGFiamFiaWRkCRVGOL1NSUtBQzk6SaT5wpDYGMDNtD05gYGSAQxOdj8E1NLcnMS/fNzEsptjRhYAAAzq4gyw==';
-// Token expires on March 10, 2023 2:51 PM UTC MeetingMinds94
+    '007eJxTYDC6a2Fc7rd6xbqNxl6npl7oqsp1ffkheBLfKf3Hi1fnvr6mwGCSZmFkkWxmbGlgZGFiamFiaQQUSTW2SE1NSUsxM0lazMWX0hDIyFD7xZGFkQECQXw+Bt/U1JLMvHTfzLyUYksjBgYABbkj8w==';
+// Token expires on March 13, 2023 5:23 PM UTC MeetingMinds92

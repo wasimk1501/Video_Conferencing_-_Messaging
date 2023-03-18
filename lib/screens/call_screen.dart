@@ -6,6 +6,7 @@ import "package:flutter/material.dart";
 import "package:get/get.dart";
 import "package:permission_handler/permission_handler.dart";
 import "package:signal_strength_indicator/signal_strength_indicator.dart";
+import "package:video_conferencing/common/constant.dart";
 import "package:video_conferencing/screens/home_screen.dart";
 
 import "../controller/agora_controller.dart";
@@ -37,7 +38,7 @@ late RtcEngine agoraEngine; // Agora engine instance
 int networkQuality = 3;
 Color networkQualityBarColor = Colors.green;
 // get instance of agora controller
-final AgoraController agoraController = Get.put(AgoraController());
+AgoraController agoraController = Get.put(AgoraController());
 final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
     GlobalKey<ScaffoldMessengerState>();
 
@@ -54,16 +55,17 @@ class _CallScreenState extends State<CallScreen> {
 
     // Set up an instance of Agora engine
     setupVideoSDKEngine();
+    agoraController = AgoraController();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Welcome to my app!"),
-            content: Text("Thank you for installing my app."),
+            title: const Text("Welcome to my app!"),
+            content: const Text("Thank you for installing my app."),
             actions: [
               TextButton(
-                child: Text("OK"),
+                child: const Text("OK"),
                 onPressed: () {
                   join();
                   Navigator.of(context).pop();
@@ -94,10 +96,12 @@ class _CallScreenState extends State<CallScreen> {
               "Local user uid:${connection.localUid} joined the channel");
           setState(() {
             _isJoined = true;
+            log(" log : ${connection.localUid.toString()} joinChannel success ");
           });
         },
         onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
           showMessage("Remote user uid:$remoteUid joined the channel");
+          log(" log : ${connection.localUid.toString()} userJoined success ");
           if (agoraController.meetingTimer != null) {
             // if (!agoraController.meetingTimer?.isActive) {
             agoraController.startMeetingTimer();
@@ -121,6 +125,9 @@ class _CallScreenState extends State<CallScreen> {
             _remoteUid = null;
           });
         },
+        // onLeaveChannel: (connection, stats) {
+        //   _onCallEnd(context);
+        // },
         onNetworkQuality:
             (connection, remoteUid, txQuality, QualityType rxQuality) {
           setState(() {
@@ -141,11 +148,11 @@ class _CallScreenState extends State<CallScreen> {
             context: context,
             builder: (BuildContext context) => AlertDialog(
                   title: const Text("Confirm"),
-                  content: Text("Are you sure want to exit?"),
+                  content: const Text("Are you sure want to exit?"),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(false),
-                      child: Text("Cancel"),
+                      child: const Text("Cancel"),
                     ),
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(true),
@@ -177,13 +184,14 @@ class _CallScreenState extends State<CallScreen> {
           //   // ],
           // ),
           body: Stack(
+            alignment: Alignment.center,
             children: [
-              _localPreview(),
+              _remoteVideo(),
               Align(
                 alignment: Alignment.topRight,
                 child: Container(
                   padding: const EdgeInsets.all(2.0),
-                  margin: EdgeInsets.only(right: 15.0, top: 40.0),
+                  margin: const EdgeInsets.only(right: 15.0, top: 40.0),
                   // alignment: Alignment.center,
                   height: 150,
                   width: 130,
@@ -192,7 +200,7 @@ class _CallScreenState extends State<CallScreen> {
                       color: Colors.grey),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: _remoteVideo()),
+                      child: _localPreview()),
                 ),
               ),
               Align(
@@ -201,6 +209,7 @@ class _CallScreenState extends State<CallScreen> {
                   margin: const EdgeInsets.only(left: 10, top: 40),
                   child: ElevatedButton(
                     onPressed: () {
+                      _onCallEnd(context);
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
@@ -233,7 +242,7 @@ class _CallScreenState extends State<CallScreen> {
                         maxValue: 4,
                         activeColor: networkQualityBarColor,
                         inactiveColor: Colors.white,
-                        radius: Radius.circular(8),
+                        radius: const Radius.circular(8),
                         minValue: 0,
                       ),
                       const SizedBox(
@@ -305,15 +314,33 @@ class _CallScreenState extends State<CallScreen> {
         controller: VideoViewController.remote(
           rtcEngine: agoraEngine,
           canvas: VideoCanvas(uid: _remoteUid),
-          connection: RtcConnection(channelId: channel),
+          connection: const RtcConnection(channelId: channel),
         ),
       );
     } else {
       String msg = '';
-      if (_isJoined) msg = 'Waiting for a remote user to join';
-      return Text(
-        msg,
-        textAlign: TextAlign.center,
+      if (_isJoined) msg = 'Waiting for a other user to join...';
+      return Container(
+        width: double.infinity,
+        color: Colors.black,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const CircularProgressIndicator(
+                // backgroundColor: Colors.blue,
+                ),
+            const SizedBox(
+              height: 30,
+            ),
+            Text(
+              msg,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  color: Colors.white, fontSize: AppFont.smallFontSize),
+            ),
+          ],
+        ),
       );
     }
   }
@@ -328,9 +355,20 @@ class _CallScreenState extends State<CallScreen> {
         ),
       );
     } else {
-      return const Text(
-        'Join a channel',
-        textAlign: TextAlign.center,
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: const [
+          CircularProgressIndicator(
+              // backgroundColor: Colors.blue,
+              ),
+          Text(
+            "Joining a channel...",
+            textAlign: TextAlign.center,
+            style:
+                TextStyle(color: Colors.white, fontSize: AppFont.smallFontSize),
+          ),
+        ],
       );
     }
   }
@@ -357,6 +395,7 @@ class _CallScreenState extends State<CallScreen> {
       _isJoined = false;
       _remoteUid = null;
     });
+    agoraController.dispose();
     agoraEngine.leaveChannel();
   }
 
@@ -367,17 +406,18 @@ class _CallScreenState extends State<CallScreen> {
     agoraEngine.release();
     log("\n============ ON DISPOSE ===============\n");
 
-    if (agoraController.meetingTimer != null) {
-      agoraController.meetingTimer!.cancel();
-    }
-
+    // if (agoraController.meetingTimer != null) {
+    log(agoraController.meetingDurationTxt.value);
+    agoraController.meetingTimer!.cancel();
+    // }
+    // agoraController.dispose();
     //destroy agora sdk
     await agoraEngine.leaveChannel();
     agoraEngine.release();
     super.dispose();
   }
 
-  void _onCallEnd(BuildContext context) {
+  void _onCallEnd(BuildContext context) async {
     leave();
     Navigator.pop(context);
   }
